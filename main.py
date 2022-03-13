@@ -1,5 +1,5 @@
 import re
-import responses as long
+import responses as resp
 
 
 def message_probability(user_message, recognised_words, single_response=False, required_words=[]):
@@ -33,17 +33,18 @@ def check_all_messages(message):
     response('Hello!', ['hello', 'hi', 'hey', 'sup', 'heyo'], single_response=True)
 
 
-    response(long.ADVICE, ['give', 'advice'], required_words=['advice'])
-    response(long.EATING, ['what', 'you', 'eat'], required_words=['you', 'eat'])
+    response(resp.ADVICE, ['give', 'advice'], required_words=['advice'])
+    response(resp.EATING, ['what', 'you', 'eat'], required_words=['you', 'eat'])
 
     best_match = max(highest_prob_list, key=highest_prob_list.get)
 
-    return long.unknown() if highest_prob_list[best_match] < 1 else best_match
+    return resp.unknown() if highest_prob_list[best_match] < 1 else best_match
 
 
 def get_response(user_input):
     split_message = re.split(r'\s+|[,;?!.-]\s*', user_input.lower())
     response = check_all_messages(split_message)
+    return response
 
     
 
